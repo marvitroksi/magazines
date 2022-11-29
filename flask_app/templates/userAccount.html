@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Magazines</title>
+</head>
+<body>
+    <div class="mb-5 d-flex justify-content-end">
+        <a href='/addMagazine' class="btn btn-primary active m-3" role="button" aria-pressed="true">Add Magazine</a>
+        <a href='/dashboard' class="btn btn-secondary  active m-3" role="button" aria-pressed="true">Dashboard</a>
+        <a href='/logout' class="btn btn-danger active m-3" role="button" aria-pressed="true">Logout</a>
+    </div>
+    <div class="d-flex p-3 justify-content-around">
+
+        <div class="first">
+            <form action="/updateUser" method="post">
+                <h1 class="text-primary">Update User</h1>
+                <div class="form-group">
+                    {% with messages = get_flashed_messages(category_filter = ['updateError']) %}     
+                        {% if messages %}                            
+                            {% for message in messages %}
+                                <p class="text-danger">{{message}}</p>                   
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="form-group">
+                    <label for="first_name" class="text-black">First Name</label>
+                    <input type="text" class="form-control" name="first_name" value="{{loggedUser.first_name}}">
+                </div>
+                <div class="form-group">
+                    {% with messages = get_flashed_messages(category_filter = ['first_name']) %}     
+                        {% if messages %}                            
+                            {% for message in messages %}
+                                <p class="text-danger">{{message}}</p>                   
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+
+
+                <div class="form-group">
+                    <label for="last_name" class="text-black">Last Name</label>
+                    <input type="text" class="form-control" name="last_name" value="{{loggedUser.last_name}}">
+                </div>
+
+                <div>
+                    {% with messages = get_flashed_messages(category_filter = ['last_name']) %}     
+                        {% if messages %}                            
+                            {% for message in messages %}            
+                                <p class="text-danger">{{message}}</p>                   
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="text-black">Email address</label>
+                    <input type="email" class="form-control" name="email" value="{{loggedUser.email}}">
+                    <small class="form-text text-muted text-light">We'll never share your email with anyone else.</small>
+                </div>
+
+                <div>
+                    {% with messages = get_flashed_messages(category_filter = ['emailUpdate']) %}     
+                        {% if messages %}                            
+                            {% for message in messages %}            
+                                <p class="text-danger">{{message}}</p>                   
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+        <div>
+            <h1 class="text-success">User's Magazines</h1>
+            {% for magazine in magazines%}
+            <div class="card">
+                <div class="card-body">
+                    {{magazine.tittle}}
+                    <a href='/delete/{{magazine.id}}' class="btn btn-danger active" role="button" aria-pressed="true">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
