@@ -47,3 +47,26 @@ def deleteMagazine(id):
         return render_template("404Error.html")
     Magazine.destroyMagazine(data)
     return redirect(request.referrer)
+
+@app.route('/subscribe/<int:id>')
+def subscribe(id):
+    if 'user' not in session:
+        return redirect('/logout')
+    data = {
+        'magazine_id': id,
+        'user_id': session['user']
+    }
+    Magazine.subscribeMagazine(data)
+    return redirect(request.referrer)
+
+@app.route('/unsubscribe/<int:id>')
+def unsubscribe(id):
+    if 'user' not in session:
+        return redirect('/logout')    
+    data = {
+        'magazine_id': id,
+        'user_id': session['user']
+    }
+    Magazine.unsubscribeMagazine(data)
+    return redirect(request.referrer)
+

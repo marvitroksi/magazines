@@ -58,8 +58,9 @@ def dashboard():
     }
     
     loggedUser = User.getUserByID(data)
+    subs = User.subscribeUnsubcribe(data)
     magazines = Magazine.getAllMagazines(data)
-    return render_template("dashboard.html", loggedUser = loggedUser, magazines = magazines)
+    return render_template("dashboard.html", loggedUser = loggedUser, magazines = magazines, subs = subs)
 
 
 @app.route('/account')

@@ -39,6 +39,15 @@ class User:
         
 
     @classmethod
+    def subscribeUnsubcribe(cls,data):
+        query = 'SELECT magazine_id as id FROM subscriptions LEFT JOIN users ON subscriptions.user_id = users.id WHERE user_id = %(user_id)s;'
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        subs = []
+        for row in results:
+            subs.append(row['id'])
+        return subs
+
+    @classmethod
     def getUsersMagazines(cls,data):
         query = 'SELECT magazines.tittle FROM magazines LEFT JOIN users ON magazines.user_id = users.id WHERE users.id = %(user_id)s;'
         result = connectToMySQL(cls.db_name).query_db(query,data)

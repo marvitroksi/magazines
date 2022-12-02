@@ -20,6 +20,12 @@
                 <div class="card-body">
                     {% for magazine in magazines %}
                         <a href='/show/{{magazine.id}}'>{{magazine.tittle}}</a>
+                        {% if magazine.id not in subs %}
+                            <a href="/subscribe/{{magazine.id}}" class="btn btn-primary active" role="button" aria-pressed="true">Subscribe</a>
+                        {% endif %}
+                        {% if magazine.id in subs %}
+                        <a href="/unsubscribe/{{magazine.id}}" class="btn btn-secondary active" role="button" aria-pressed="true">Unsubscribe</a>
+                        {% endif %}
                         <p>added by {{magazine.first_name}} </p>
                     {% endfor %}
                 </div>

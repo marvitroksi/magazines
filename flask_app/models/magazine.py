@@ -34,6 +34,22 @@ class Magazine:
             magazines.append(row)
         return magazines
 
+    @classmethod
+    def getSubsCount(cls,data):
+        query = 'SELECT count(subscriptions.id) as number FROM subscriptions LEFT JOIN magazines ON subscriptions.magazine_id = magazines.id WHERE magazines.id = %(magazine_id)s GROUP BY magazine.id;'
+        result = connectToMySQL(cls.db_name).query_db(query,data)
+        return result[0]
+
+    @classmethod
+    def subscribeMagazine(cls,data):
+        query = 'INSERT INTO subscriptions ( magazine_id, user_id ) VALUES ( %(magazine_id)s, %(user_id)s ); '
+        return connectToMySQL(cls.db_name).query_db(query,data)
+
+    @classmethod
+    def unsubscribeMagazine(cls,data):
+        query = 'DELETE FROM subscriptions WHERE magazine_id = %(magazine_id)s AND user_id = %(user_id)s;'
+        return connectToMySQL(cls.db_name).query_db(query,data)
+    
 
     @classmethod
     def destroyMagazine(cls,data):
